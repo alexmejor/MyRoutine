@@ -1,0 +1,284 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+/* --- START TOGGLE MENU --- */
+
+.sidenav {
+    height: 100%;
+    width: 80%;
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: -80%;
+    background-color: #ececec;
+    overflow-x: hidden;
+    transition: 0.5s ease-out;
+}
+
+.sidenav a {
+    padding: 15px 8px 15px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #222222;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:active {
+    color: #f1f1f1;
+}
+
+.activeSection {
+    background-color: #e1e1e4;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.headerNav {
+    width: 100%;
+    font-size: 20px;
+    color: white;
+    background-color: #161b39;
+    padding: 15px 15px 15px 25px;
+    position: fixed;
+    height: 62px;
+    z-index: 2;
+
+}
+.titleHeader {
+    text-transform: capitalize;
+}
+/* --- END TOGGLE MENU --- */
+
+table td {
+    /*
+    background-color: #f2f2f2;
+    border: 1px solid #9f9f9f;
+*/
+    background-color: #fbfbfb;
+    border-bottom: 1px solid #d1d1d1;
+    padding: 3px;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table tr {
+    height: 50px;
+}
+
+td:nth-child(2),
+td:nth-child(3),
+td:nth-child(4) {
+    text-align: center;
+}
+
+.moreReps,
+.lessReps {
+    width: 50%;
+    height: 50px;
+}
+
+thead {
+    line-height: 2em;
+}
+
+/* --- START METHOD TO SWIPE RIGHT AND LEFT --- */
+
+.swiper-container {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+/* --- END SWIPER METHOD --- */
+
+.editButton {
+    background: url("../icons/thin-002_write_pencil_new_edit-256.png") no-repeat;
+    -webkit-background-size: ;
+    background-size: contain;
+    height: 21px;
+    width: 25px;
+}
+
+img {
+    vertical-align: middle;
+}
+
+i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    margin-right: 15px;
+}
+
+#mySidenav span {
+    padding-left: 30px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.w3-display-container {
+    padding: 30px;
+    height: 100px;
+    border-bottom: 1px solid #b2b2b2;
+}
+
+.w3-display-left img {
+    width: 80px;
+    height: 80px;
+    margin-left: 5px;
+}
+
+.w3-display-left span {
+    text-transform: uppercase;
+    padding-left: 30px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.headerNav:active,
+.headerNav:hover {
+    background-color: #161b39;
+}
+
+.activeMenu {
+    left: 0;
+}
+
+.arrow::before {
+    transform: scaleX(-1);
+    display: inline-block;
+    content: "\2794";
+}
+.trigram::before {
+    padding-right: 2px;
+    content: "\002630"
+}
+
+#overlay-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background: #000;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    z-index: 3;
+    display: none;
+}
+
+.container {
+    color: #303030;
+    padding: 62px 7px 7px 7px;
+}
+
+.fromRightToLeft {
+    position: absolute;
+    right: -100%;
+    width: 100%;
+    animation-name: example;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes example {
+    from {
+    }
+    to {
+        right: 0;
+    }
+}
+
+.profile {
+    width: 100%;
+    padding: 20px;
+    text-transform: capitalize;
+}
+.profile input, select {
+    border: none;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    border-bottom: 1px solid #c3c3c3;
+    text-transform: capitalize;
+    width: 100%;
+    outline: none;
+    font-size: 13px;
+}
+
+.profile input:hover {
+    border-bottom: 1px solid #0629bc;
+}
+
+.profile input::placeholder {
+    font-size: 13px;
+}
+
+.profile select {
+    margin-left: -5px;
+    background-color: #fff;
+}
+
+#saveProfile {
+    position: fixed;
+    top: 15px;
+    right: 35px;
+    z-index: 2;
+    color: white;
+    font-size: 20px;
+}
+/*
+#saveProfile {
+    padding: 4px 8px;
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+}
+*/
+

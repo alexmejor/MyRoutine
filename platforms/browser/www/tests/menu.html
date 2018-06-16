@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .swiper-container {
+            width: 80%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        .sidenav {
+            height: 100%;
+            width: 80%;
+            position: fixed;
+            z-index: 3;
+            top: 0;
+            left: -80%;
+            background-color: #ececec;
+            overflow-x: hidden;
+            transition: 0.5s ease-out;
+        }
+
+        .sidenav a {
+            padding: 15px 8px 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #222222;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:active {
+            color: #f1f1f1;
+        }
+
+        .activeSection {
+            background-color: #e1e1e4;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .headerNav {
+            width: 100%;
+            font-size: 20px;
+            color: white;
+            background-color: #161b39;
+            padding: 15px 15px 15px 25px;
+            position: fixed;
+            height: 62px;
+            z-index: 2;
+
+        }
+
+        .container {
+            padding-top: 62px;
+        }
+
+        .headerNav:active,
+        .headerNav:hover {
+            background-color: #161b39;
+
+        }
+
+        .active {
+            left: 0;
+        }
+
+        #overlay-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+            z-index: 1;
+            display: none;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        i {
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+
+        }
+
+        .right {
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+
+        span {
+            padding-left: 30px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .w3-display-container {
+            padding: 30px;
+            border-bottom: 1px solid #b2b2b2;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-3.3.1.min.js"></script>
+
+
+</head>
+
+<body>
+    <!-- Start navMenu header -->
+    <div class="headerNav"><span style="padding-left: 2px;" onclick="openNav()">&#9776;</span><span style="padding-left: 30px;">Home</span></div>
+    <!-- End navMenu header -->
+
+    <!-- Start navMenu left side -->
+    <div id="mySidenav" class="sidenav">
+        <div style="background-image: url(2710104.jpg); background-size: cover;  height: 150px; margin-bottom: 10px; border-bottom: 3px solid #1b1b1b"></div>
+        <!--  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+        <a href="#" id="myaccount"><img src="user.png" style="width: 24px;"><span>Mi pérfil</span></a>
+        <a href="#"><img src="fitness.png" style="width: 24px;"><span>Entrenamientos</span></a>
+        <a href="#"><img src="trophy2.png" style="width: 24px;"><span>Marcas personales</span></a>
+        <a href="#"><img src="checked.png" style="width: 24px;"><span>Técnica de ejercicios</span></a>
+    </div>
+    <!-- End navMenu left side -->
+
+    <!-- This closes the navmenu when you click on it and put the content darker -->
+    <div id="overlay-back" onclick="closeNav()"></div>
+
+    <!-- Start main container -->
+    <!-- Here goes the content -->
+    <div class="container" style="background-color: rgb(235, 235, 235)">
+        <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img width="100%" src="images/posi1.png"></div>
+            <div class="swiper-slide"><img width="100%" src="images/posi2.png"></div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Navigation -->
+<!--
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+-->
+    </div>
+    <div>
+        <p>
+            Acostados boca arriba sobre un banco plano. El torso debe estar apoyado desde la cabeza a las caderas, con las piernas dobladas y los pies asegurados.<br>
+            Agarrad una mancuerna en cada mano y sujetad los pesos directamente encima del pecho. Las palmas deben mirar hacia los pies. Es el punto de partida.<br>
+            Doblad los brazos para bajar las mancuernas hacia la parte externa del pecho, manteniendo los codos apuntando hacia los lados. Tomad aire y retened la respiración mientras empezáis a bajar el peso.<br>
+            Revertid la dirección cuando las mancuernas lleguen a la posición final, y devolved las al punto de partida siguiendo la dirección de un arco.<br>
+            Expulsad el aire una vez que hayáis superado el punto de estancamiento (el más difícil del intervalo de recorrido).<br>
+            Deteneos un instante con los brazos estirados pero no hiperextendidos. Repetid las veces necesarias.<br>
+            Estad seguros de subir las mancuernas de manera que permanezcan sobre un plano vertical directamente encima de los hombros en la posición final.
+        </p>
+    </div>
+    <!-- Swiper JS -->
+    <script src="js/swiper.min.js"></script>
+    <script>
+        /* ========
+            Debugger plugin, simple demo plugin to console.log some of callbacks
+            ======== */
+        var myPlugin = {
+            name: 'debugger',
+            params: {
+                debugger: false,
+            },
+            on: {
+                init: function() {
+                    if (!this.params.debugger) return;
+                    console.log('init');
+                },
+                click: function(e) {
+                    if (!this.params.debugger) return;
+                    console.log('click');
+                },
+                tap: function(e) {
+                    if (!this.params.debugger) return;
+                    console.log('tap');
+                },
+                doubleTap: function(e) {
+                    if (!this.params.debugger) return;
+                    console.log('doubleTap');
+                },
+                sliderMove: function(e) {
+                    if (!this.params.debugger) return;
+                    console.log('sliderMove');
+                },
+                slideChange: function() {
+                    if (!this.params.debugger) return;
+                    console.log('slideChange', this.previousIndex, '->', this.activeIndex);
+                },
+                slideChangeTransitionStart: function() {
+                    if (!this.params.debugger) return;
+                    console.log('slideChangeTransitionStart');
+                },
+                slideChangeTransitionEnd: function() {
+                    if (!this.params.debugger) return;
+                    console.log('slideChangeTransitionEnd');
+                },
+                transitionStart: function() {
+                    if (!this.params.debugger) return;
+                    console.log('transitionStart');
+                },
+                transitionEnd: function() {
+                    if (!this.params.debugger) return;
+                    console.log('transitionEnd');
+                },
+                fromEdge: function() {
+                    if (!this.params.debugger) return;
+                    console.log('fromEdge');
+                },
+                reachBeginning: function() {
+                    if (!this.params.debugger) return;
+                    console.log('reachBeginning');
+                },
+                reachEnd: function() {
+                    if (!this.params.debugger) return;
+                    console.log('reachEnd');
+                },
+            },
+        };
+
+    </script>
+    <script>
+        // Install Plugin To Swiper
+        Swiper.use(myPlugin);
+
+        // Init Swiper
+        var swiper = new Swiper('.swiper-container', {
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // Enable debugger
+            debugger: true,
+        });
+
+    </script>
+    </div>
+
+
+    <!-- End main container -->
+    
+    <script>
+        $("#myaccount").addClass("activeSection");
+
+        function openNav() {
+            $("#mySidenav").addClass("active");
+            //$("body").css("overflow","hidden");
+            $('#mySidenav, #overlay-back').on('touchmove', function(e) {
+                e.preventDefault();
+
+            });
+            $('#overlay, #overlay-back').fadeIn(500);
+            //document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            $("#mySidenav").removeClass("active");
+            //$("body").css("overflow","scroll");
+            jQuery('body').unbind('touchmove');
+            $('#overlay, #overlay-back').fadeOut(500);
+            //document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+    
+</body>
+
+</html>
