@@ -23,13 +23,13 @@ function displayMuscleGroups(categories) {
 function displayExercices(thisEle, categories) {
     $(".containerExercices").html("");
     var indexGroup = $(thisEle).attr("name");
-    for (var j = 0; j < categories[indexGroup].exercicesName.length; j++) {
-        var name = categories[indexGroup].exercicesName[j];
+    for (var j = 0; j < categories[indexGroup].exercisesNames.length; j++) {
+        var name = categories[indexGroup].exercisesNames[j];
         $(".containerExercices").append(`
             <div name="${indexGroup}" class="w3-display-container">
                 <div name="${j}" class="w3-display-left">
-                    <img src="${categories[indexGroup].exercicesName[j].img1}">
-                    <span>${categories[indexGroup].exercicesName[j].name}</span>
+                    <img src="${categories[indexGroup].exercisesNames[j].img1}">
+                    <label>${categories[indexGroup].exercisesNames[j].name}</label>
                 </div>
                 <div class="w3-display-right"><i></i></div>
             <div>`);
@@ -59,18 +59,17 @@ function displayExerciceInfo(thisEle, categories) {
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img width="100%" src="${categories[indexGroup].exercicesName[indexExercice].img1}">
+                    <img width="100%" src="${categories[indexGroup].exercisesNames[indexExercice].img1}">
                 </div>
                 <div class="swiper-slide">
-                    <img width="100%" src="${categories[indexGroup].exercicesName[indexExercice].img2}">
+                    <img width="100%" src="${categories[indexGroup].exercisesNames[indexExercice].img2}">
                 </div>
             </div>
             <div class="swiper-pagination"></div>
         </div>`;
 
-    $(".containerExercices").html(imagesGallery);
-    $(".titleHeader").html(categories[indexGroup].exercicesName[indexExercice].name);
-    $(".containerExercices").append("<div style='padding: 15px;'>" + categories[indexGroup].exercicesName[indexExercice].description + "</div>");
+    $(".containerExercices").html(`<h4 style='text-align:center'>${categories[indexGroup].exercisesNames[indexExercice].name}</h4> ${imagesGallery}`);
+    $(".containerExercices").append("<div style='padding: 15px;'>" + categories[indexGroup].exercisesNames[indexExercice].description + "</div>");
 
     //changes the navMenu icon for an left arrow
     $("#headerNav").removeClass("trigram").addClass("arrow");

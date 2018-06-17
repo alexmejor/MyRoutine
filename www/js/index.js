@@ -1,6 +1,16 @@
 $(document).ready(function () {
 
-    var json = {
+    var json3 = {
+        "name": "alex",
+        "surname": "frutos",
+        "nick": "Alexfiweb",
+        "age": 26,
+        "weight": 76,
+        "gender": "hombre",
+        "email": "alex@myroutine.com",
+        "password": "123123",
+    }
+    var json2 = {
         "name": "alex",
         "surname": "frutos",
         "nick": "Alexfiweb",
@@ -141,7 +151,7 @@ $(document).ready(function () {
         ],
     };
 
-    var categories = [
+    var categories1 = [
         {
             "name": "pecho",
             "img": "images/pecho2.png",
@@ -184,23 +194,6 @@ $(document).ready(function () {
         }
     ];
 
-
-    // BUTTONS
-    var lessReps = "<button class='lessReps'>-</button>";
-    var moreReps = "<button class='moreReps'>+</button>";
-    var nextRoutine = '<button style="display: none;" id="buttonNext">Siguiente rutina</button>';
-
-
-
-    var json;
-    //        $.ajax({
-    //            url: 'http://localhost:8080/Login/resources/users/alex@alex.com',
-    //            type: 'get',
-    //            async: false,
-    //            success: function (response) {
-    //                json = response;
-    //            }
-    //        });
     console.log(json);
     displayHome(json, categories);
 
@@ -221,7 +214,7 @@ $(document).ready(function () {
 
     $("#routines").click(function () {
         closeNav();
-        displayRoutineSection();
+        displayRoutineSection(json, categories);
         $(".titleHeader").html("Entrenamientos");
     });
 
@@ -254,11 +247,6 @@ $(document).ready(function () {
         });
     });
 
-
-
-    /* --- ALL VIEWS --- */
-
-
     function displayProfile() {
         resetContainers();
         var gender;
@@ -273,119 +261,15 @@ $(document).ready(function () {
             $("input").each(function () {
                 json[$(this).attr("key")] = $(this).val();
             });
-            console.log(json);
-            $(".modal").show();
-            $(".modal-content").show(500);
-            $(".close").click(function () {
-                $(".modal-content").hide(500);
-                $(".modal").hide(500);
-                displayProfile();
-            });
-            //            $.ajax({
-            //                url: 'http://localhost:8080/Login/resources/users/alex@alex.com',
-            //                type: 'put',
-            //                Accept: "application/json",
-            //                contentType: "application/json",
-            //                data: JSON.stringify(json),
-            //                success: function (response) {
-            //                    $(".modal").show();
-            //                    $(".modal-content").show(500);
-            //                    $(".close").click(function () {
-            //                        $(".modal-content").hide(500);
-            //                        $(".modal").hide(500);
-            //                        displayProfile();
-            //                    });
-            //                },
-            //                error: function (XMLHttpRequest, textStatus, errorThrown) {
-            //                    $(".modal").show();
-            //                    $(".modal-content").find("p").html("Error");
-            //                    $(".modal-content").find("button").css("color", "#b51a1a");
-            //                    $(".modal-content").show(500);
-            //                    $(".close").click(function () {
-            //                        $(".modal-content").hide(500);
-            //                        $(".modal").hide(500);
-            //                    });
-            //                }
-            //            });
+            // $(".modal").show();
+            // $(".modal-content").show(500);
+            // $(".close").click(function () {
+            //     $(".modal-content").hide(500);
+            //     $(".modal").hide(500);
+            //     displayProfile();
+            // });
+            ajaxPut();
 
         });
-    }
-
-    function displayRoutineSection() {
-        resetContainers();
-        $(".containerRoutines").append('<div style="width: 90%; margin: 80px auto;"><div class="routineSectionButtons">Rutina activa</div><div class="routineSectionButtons">ver rutinas</div></div>');
-        $(".routineSectionButtons").eq(1).on("click", displayRoutines);
-    }
-
-    function displayRoutines() {
-        $("#headerNav").removeClass("trigram").addClass("arrow");
-        //removes the function of navMenu so I can add the function to go previous page
-        $("#headerNav").unbind();
-        //To go back to the previous section
-        $(".arrow").click(function () {
-            displayRoutineSection()
-        });
-        $(".containerRoutines").html("");
-        for (var i = 0; i < json.routines.length; i++) {
-            $(".containerRoutines").append(`
-                <div name="${i}" class="w3-display-container">
-                    <div class="w3-display-left">
-                        <span>${json.routines[i].name}</span><br>
-                        <span style="font-size:12px">${json.routines[i].category}</span>
-                    </div>
-                    <div class="w3-display-right"><i></i></div>
-                </div>`);
-        }
-        $(".containerRoutines").append('<div><div class="editButton"><i class="fas fa-plus"></i></div>');
-
-        //it says edit but it actually add a routine, i keept "edit" because the css class (right position)
-        $(".editButton").click(function() {createRoutine(json, categories)});
-        var indexRoutine = $(".w3-display-container").attr("name");
-        $(".w3-display-container").on("click", function () {
-            var thisEle = $(this);
-            var indexGroup = $(thisEle).attr("name");
-            //$(".titleHeader").html(categories[indexGroup].name);
-            displayDays(thisEle, indexRoutine);
-        });
-    }
-
-    function displayDays(thisEle, indexRoutine) {
-        var indexRoutine = $(thisEle).attr("name");
-        $(".arrow").click(function () {
-            displayRoutines()
-        });
-        $(".containerRoutines").html(`<h4 style='text-align:center'>${json.routines[indexRoutine].name}</h4>`);
-        for (var j = 0; j < json.routines[indexRoutine].days.length; j++) {
-            //var name = categories[indexGroup].exercicesName[j];
-            $(".containerRoutines").append('<div name="' + indexRoutine + '" class="selectDay"><div name="' + j + '">' + json.routines[indexRoutine].days[j].name + '</div><div>');
-        }
-
-        $(".containerRoutines").append('<div><div class="addButton"><i class="fas fa-plus"></i></div><div class="editButton"><i class="fas fa-pencil-alt"></i></div>');
-        var container = ".containerRoutines";
-        $(".addButton").click(function(){createDay(json, categories, container, indexRoutine)});
-
-        //it shows the info of each exercice (description, name, images)
-        $(".selectDay").on("click", function () {
-            $(".containerRoutines").html("");
-            var thisEle = $(this);
-            displayDayTable(thisEle);
-        });
-    }
-
-    function displayDayTable(thisEle) {
-        var indexRoutine = $(thisEle).attr("name");
-        var indexDay = $(thisEle).find("div").attr("name");
-        $(".titleHeader").html(json.routines[indexRoutine].name);
-        $(".containerRoutines").html("");
-        //$(".titleHeader").html(categories[indexGroup].exercicesName[indexExercice].name);
-        $(".containerRoutines").append("<p class='dayTitle'>" + json.routines[indexRoutine].days[indexDay].name + "</p><p class='finishedTitle' style='display:none;text-align:center;'><b>¡Día Completado!</b></p><div class='tableDay'><table><thead><tr><th>Ejercicios</th><th>Reps.</th><th>Series</th><th></th></tr></thead><tbody>");
-        for (var i = 0; i < json.routines[indexRoutine].days[indexDay].exercises.length; i++) {
-            $(".containerRoutines tbody").append("<tr><td>" + json.routines[indexRoutine].days[indexDay].exercises[i].exerciseName.name + "</td><td>" + json.routines[indexRoutine].days[indexDay].exercises[i].repetitions + "</td><td class='sets'>" + json.routines[indexRoutine].days[indexDay].exercises[i].series + "</td><td width='80px;'>" + moreReps + lessReps + "</td></tr>");
-        }
-        $(".containerRoutines").append("</tbody></table></div><button name='" + json.routines[indexRoutine].days[indexDay].id + "' class='nextDay'>Siguiente dia</button>");
-        $(".nextDay").click(function () {
-            console.log($(this).attr("name"));
-        });
-        buttonMoreLess();
     }
 });

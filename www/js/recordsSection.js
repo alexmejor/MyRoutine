@@ -17,7 +17,7 @@ function displayRecords(json, categories) {
         $(".containerRecords tbody").append(`
             <tr>
                 <td>${json.records[i].exerciseName.name}</td>
-                <td>${json.records[i].weight}kg</td>
+                <td>${json.records[i].kilos}kg</td>
                 <td>${json.records[i].repetitions}</td>
                 <td></td>
             </tr>`);
@@ -64,8 +64,8 @@ function createRecord(json, categories) {
             if ($(".containerRecords select").val() == categories[i].name) {
                 $(".containerRecords form").append("<span class='selectExercices'></span>");
                 $(".selectExercices").append("<br><br><select class='exercice'>");
-                for (var j = 0; j < categories[i].exercicesName.length; j++) {
-                    $(".selectExercices select").append("<option>" + categories[i].exercicesName[j].name + "</option>");
+                for (var j = 0; j < categories[i].exercisesNames.length; j++) {
+                    $(".selectExercices select").append("<option>" + categories[i].exercisesNames[j].name + "</option>");
                 }
                 $(".selectExercices").append("</select><br><br>");
             }
@@ -97,7 +97,7 @@ function editRecord(json, categories) {
         $(".containerRecords tbody").append(`
             <tr>
                 <td>${json.records[i].exerciseName.name}</td>
-                <td><input type='number' key='weight' min=0 style='width:60px' value='${json.records[i].weight}'></td>
+                <td><input type='number' key='kilos' min=0 style='width:60px' value='${json.records[i].kilos}'></td>
                 <td><input style='width:60px' min=0 key='repetitions' type='number' value='${json.records[i].repetitions}'></td>
                 <td class='deleteRecord'>&#10008</td>
             </tr>`);
@@ -107,6 +107,7 @@ function editRecord(json, categories) {
     $(".deleteRecord").click(function () {
         var indexRecord = $("tr").index($(this).parent("tr:first")) - 1;
         json.records.splice(indexRecord, 1);
+        ajaxPut();
         displayRecords(json, categories);
     });
 
@@ -117,12 +118,22 @@ function editRecord(json, categories) {
                 json.records[i][$(this).attr("key")] = $(this).val();
             });
         }
+        ajaxPut();
         displayRecords(json, categories);
     });
 }
 
 function saveNewRecord(json, categories) {
     var records = [];
+    var exerciceId;
+    for(var j=0;j<categories.length;j++) {
+        for (var i=0;i<categories[j].exercisesNames.length;i++) {
+            if(categories[j].exercisesNames[i].name == $("select").eq(1).val()) {
+                exerciceId = categories[j].exercisesNames[i].id;
+            }
+        }
+    }
+
     if ($("input").eq(0).val() == "" || $("input").eq(1).val() == "" || $("select").eq(1).val() == null) {
         $(".containerError").html("<br><p>No pueden haber campos vacios</p>");
     }
@@ -130,14 +141,14 @@ function saveNewRecord(json, categories) {
         records = {
             "exerciseName": {
                 "description": "",
-                "id": "",
+                "id": exerciceId,
                 "name": $("select").eq(1).val(),
             },
             "repetitions": $("input").eq(0).val(),
-            "weight": $("input").eq(1).val(),
+            "kilos": $("input").eq(1).val(),
         };
         json["records"].push(records);
+        ajaxPut();
         displayRecords(json, categories);
     }
 }
-

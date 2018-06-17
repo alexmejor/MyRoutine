@@ -1,3 +1,56 @@
+var token = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGV4QG15cm91dGluZS5jb20ifQ.5a451Lcs10fjl50WjmrkomE-wYNXeBZaGPYhkkZD2T9YAaeAuQd5CF49FWt-81pAm-ukfMNcez1od69rwQzqzw';
+var json;
+var user;
+var categories;
+$.ajax({
+    url: 'http://18.191.145.139/Login/resources/users/alex@myroutine.com',
+    type: 'get',
+    headers: { 'Authorization': token, },
+    async: false,
+    success: function (response) {
+        json = response;
+        user = json.email;
+    }
+});
+$.ajax({
+    url: 'http://18.191.145.139/Login/resources/categories',
+    type: 'get',
+    headers: { 'Authorization': token, },
+    async: false,
+    success: function (response) {
+        categories = response;
+    }
+});
+
+function ajaxPut() {
+    $.ajax({
+        url: 'http://18.191.145.139/Login/resources/users/' + user,
+        type: 'put',
+        headers: { 'Authorization': token, },
+        Accept: "application/json",
+        contentType: "application/json",
+        data: JSON.stringify(json),
+        success: function (response) {
+            $(".modal").show();
+            $(".modal-content").show(500);
+            $(".close").click(function () {
+                $(".modal-content").hide(500);
+                $(".modal").hide(500);
+            });
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $(".modal").show();
+            $(".modal-content").find("p").html("Error");
+            $(".modal-content").find("button").css("color", "#b51a1a");
+            $(".modal-content").show(500);
+            $(".close").click(function () {
+                $(".modal-content").hide(500);
+                $(".modal").hide(500);
+            });
+        }
+    });
+}
+
 //This opens the toggle menu
 function openNav() {
     $("#mySidenav").addClass("activeMenu");
@@ -21,7 +74,7 @@ function closeNav() {
 }
 
 function resetContainers() {
-    $("#headerNav").removeClass("arrow").addClass("trigram");
+    $("#headerNav").removeClass("arrow cross").addClass("trigram");
     $("#headerNav").unbind();
     $("#headerNav").click(openNav);
     $(".containerError").html("");
