@@ -1,9 +1,9 @@
-var token = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGV4QG15cm91dGluZS5jb20ifQ.5a451Lcs10fjl50WjmrkomE-wYNXeBZaGPYhkkZD2T9YAaeAuQd5CF49FWt-81pAm-ukfMNcez1od69rwQzqzw';
+var token = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGV4QGFsZXguY29tIn0.3pxYdlpyjTZAX6KFbLm5IZKh2_8nwHBonaofZ6sgxMNK0gS5Yi56fjjboawtO3s35qhn6sbQgaE8iQPXgoEajw';
 var json;
 var user;
 var categories;
 $.ajax({
-    url: 'http://18.191.145.139/Login/resources/users/alex@myroutine.com',
+    url: 'http://18.191.145.139/Login/resources/users/alex@alex.com',
     type: 'get',
     headers: { 'Authorization': token, },
     async: false,
@@ -30,6 +30,7 @@ function ajaxPut() {
         Accept: "application/json",
         contentType: "application/json",
         data: JSON.stringify(json),
+        async: false,
         success: function (response) {
             $(".modal").show();
             $(".modal-content").show(500);
@@ -37,6 +38,7 @@ function ajaxPut() {
                 $(".modal-content").hide(500);
                 $(".modal").hide(500);
             });
+            json = response;
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             $(".modal").show();

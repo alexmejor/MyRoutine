@@ -6,6 +6,7 @@ var moreReps = "<button class='moreReps'>+</button>";
 var nextRoutine = '<button style="display: none;" id="buttonNext">Siguiente rutina</button>';
 function displayHome(json, categories) {
     resetContainers();
+    $(".titleHeader").html("Inicio");
     $(".containerHome").append(`<div style="width: 90%; margin: 40px auto;">
                                     <div class="homeSectionButtons">
                                         <i class="fas fa-play-circle"></i>comenzar a entrenar
@@ -20,6 +21,14 @@ function displayHome(json, categories) {
     $(".createRoutine").click(function () {
         var container = ".containerHome";
         createRoutine(json, categories, container);
+    });
+    
+    $(".homeSectionButtons").eq(0).click(function () {
+        startTraining(json, categories);
+    });
+
+    $(".homeSectionButtons").eq(1).click(function () {
+        changeActiveRoutine(json, categories);
     });
 }
 
@@ -48,18 +57,20 @@ function validateForm() {
 
 function displayActiveRoutine(json, categories) {
     var activeRoutine = json.activeRoutine;
+    $(".titleHeader").html("Rutina Activa");
     if (!json.routines.length) {
         $(".containerRoutines").html("<h4 style='text-align:center'>Aun no tienes ninguna rutina en la base de datos</h4><button class='button'>Crear Rutina</button>");
         var container = ".containerRoutines";
-        $("button").eq(0).click(function() {createRoutine(json, categories, container)});
+        $("button").eq(0).click(function () { createRoutine(json, categories, container) });
     }
     else {
         for (var i = 0; i < json.routines.length; i++) {
-            if (json.routines[i].id == activeRoutine) {
+            if (json.routines[i].id == json.activeRoutine) {
+                console.log(json.routines[i].id + " rutina activa : " + activeRoutine);
                 displayDays(json, categories, null, i);
             }
             else {
-                $(".containerRoutines").html("<h3>No tienes ninguna rutina activa</h3>");
+                //$(".containerRoutines").html("<h3>No tienes ninguna rutina activa</h3>");
             }
         }
     }
@@ -112,7 +123,7 @@ function createRoutine(json, categories, container) {
         "category": "",
         "days": [],
     };
-
+    $(".titleHeader").html("Nueva Rutina");
     $("#headerNav").removeClass("trigram").addClass("cross");
     $("#headerNav").unbind();
     $(".cross").click(function () {
@@ -252,6 +263,66 @@ function createExercices(json, categories, container, indexNewRoutine, newDay, n
     });
 }
 
+function startTraining(json, categories) {
+    var indexRoutine;
+    var indexDay = 0;
+    $(".titleHeader").html("Comenzar Entrenamiento");
+    $("#headerNav").removeClass("cross trigram").addClass("arrow");
+    $("#headerNav").unbind();
+    $(".arrow").click(function () {
+        displayHome(json, categories);
+    });
+    for (var i = 0; i < json.routines.length; i++) {
+        if (json.routines[i].id == json.activeRoutine) {
+            indexRoutine = i;
+        }
+    }
+    $(".containerHome").html("");
+
+    $(".containerHome").append("<h4 style='text-align:center'>" + json.routines[indexRoutine].days[indexDay].name + "</h4><p class='finishedTitle' style='display:none;text-align:center;'><b>¡Día Completado!</b></p><div class='tableDay'><table><thead><tr><th>Ejercicios</th><th>Reps.</th><th>Series</th><th></th></tr></thead><tbody>");
+    for (var i = 0; i < json.routines[indexRoutine].days[indexDay].exercises.length; i++) {
+        $(".containerHome tbody").append("<tr><td>" + json.routines[indexRoutine].days[indexDay].exercises[i].exerciseName.name + "</td><td>" + json.routines[indexRoutine].days[indexDay].exercises[i].repetitions + "</td><td class='sets'>" + json.routines[indexRoutine].days[indexDay].exercises[i].series + "</td><td width='80px;'>" + moreReps + lessReps + "</td></tr>");
+    }
+    $(".containerHome").append("</tbody></table></div>");
+    $(".nextDay").click(function () {
+        console.log($(this).attr("name"));
+    });
+    buttonMoreLess();
+}
+
+function changeActiveRoutine(json, categories) {
+    $(".containerHome").html("<table><tbody><tr><th style='text-align:left;padding-left:35px;'>Rutinas</th><th>Estado</th></tr>");
+    var activeButton;
+    $(".titleHeader").html("Cambiar Rutina");
+    $("#headerNav").removeClass("cross trigram").addClass("arrow");
+    $("#headerNav").unbind();
+    $(".arrow").click(function () {
+        displayHome(json, categories);
+    });
+    for (var i = 0; i < json.routines.length; i++) {
+        if (json.routines[i].id == json.activeRoutine) {
+            activeButton = "<span style='color:green'>Activa</span>";
+        }
+        else {
+            activeButton = `<button name='${i}' class='changeRoutine'>Activar</button></td>`;
+        }
+        $(".containerHome tbody").append(`
+            <tr>
+                <td style='padding-left:35px;'>${json.routines[i].name}</td>
+                <td>${activeButton}</td>`);
+    }
+    $(".containerHome").append("</tbody></table>");
+
+    $(".changeRoutine").click(function () {
+        json["activeRoutine"] = json.routines[$(this).attr("name")].id;
+        ajaxPut();
+        changeActiveRoutine(json, categories);
+        // $(".containerHome").html("");
+        // displayActiveRoutine(json, categories);
+    });
+
+}
+
 function displayEditDays(json, categories, thisEle, indexNewRoutine) {
     var indexRoutine = "";
     if (thisEle == null) {
@@ -322,11 +393,12 @@ function displayDays(json, categories, thisEle, indexNewRoutine) {
     var routineName = json.routines[indexRoutine].name;
     $("#headerNav").removeClass("cross trigram").addClass("arrow");
     $("#headerNav").unbind();
+    $(".titleHeader").html("Entrenamientos");
     $(".arrow").click(function () {
         // displayDays(json, categories, null, indexRoutine);
         displayRoutines(json, categories)
     });
-    $(".containerRoutines").html(`<h4 style='text-align:center'>${routineName}</h4>`);
+    $(".containerRoutines").html(`<h4 style='text-align:center'>Rutina ${routineName}</h4>`);
     for (var j = 0; j < json.routines[indexRoutine].days.length; j++) {
         //var name = categories[indexGroup].exercicesName[j];
         $(".containerRoutines").append('<div name="' + indexRoutine + '" class="selectDay"><div name="' + j + '">' + json.routines[indexRoutine].days[j].name + '</div><div>');
@@ -334,12 +406,12 @@ function displayDays(json, categories, thisEle, indexNewRoutine) {
 
     //if this routine is active it shows "this is active" if it isn't, it shows a button to active it
     var active;
-        if (json.routines[indexRoutine].id == json.activeRoutine) {
-            active = "<span style='color:green'>Rutina Activa</span>"
-        }
-        else {
-            active = "<button class='button activateRoutine'>Activar rutina</button>";
-        }
+    if (json.routines[indexRoutine].id == json.activeRoutine) {
+        active = "<span style='color:green'>Rutina Activa</span><br>"
+    }
+    else {
+        active = "<button class='button activateRoutine'>Activar rutina</button><br>";
+    }
 
     $(".containerRoutines").append(`
         ${active}
@@ -354,6 +426,7 @@ function displayDays(json, categories, thisEle, indexNewRoutine) {
     $(".activateRoutine").click(function () {
         json["activeRoutine"] = json.routines[indexRoutine].id;
         ajaxPut();
+        displayActiveRoutine(json, categories);
     });
 
     var container = ".containerRoutines";
@@ -374,10 +447,10 @@ function displayDayTable(json, categories, thisEle) {
     $(".arrow").click(function () {
         displayDays(json, categories, thisEle, null);
     });
-    $(".titleHeader").html(json.routines[indexRoutine].name);
+    // $(".titleHeader").html(json.routines[indexRoutine].name);
     $(".containerRoutines").html("");
     //$(".titleHeader").html(categories[indexGroup].exercicesName[indexExercice].name);
-    $(".containerRoutines").append("<p class='dayTitle'>" + json.routines[indexRoutine].days[indexDay].name + "</p><p class='finishedTitle' style='display:none;text-align:center;'><b>¡Día Completado!</b></p><div class='tableDay'><table><thead><tr><th>Ejercicios</th><th>Reps.</th><th>Series</th><th></th></tr></thead><tbody>");
+    $(".containerRoutines").append("<h4 style='text-align:center'>" + json.routines[indexRoutine].days[indexDay].name + "</h4><p class='finishedTitle' style='display:none;text-align:center;'><b>¡Día Completado!</b></p><div class='tableDay'><table><thead><tr><th>Ejercicios</th><th>Reps.</th><th>Series</th><th></th></tr></thead><tbody>");
     for (var i = 0; i < json.routines[indexRoutine].days[indexDay].exercises.length; i++) {
         $(".containerRoutines tbody").append("<tr><td>" + json.routines[indexRoutine].days[indexDay].exercises[i].exerciseName.name + "</td><td>" + json.routines[indexRoutine].days[indexDay].exercises[i].repetitions + "</td><td class='sets'>" + json.routines[indexRoutine].days[indexDay].exercises[i].series + "</td><td width='80px;'>" + moreReps + lessReps + "</td></tr>");
     }

@@ -71,9 +71,11 @@ function createRecord(json, categories) {
             }
         }
     });
-    $(".containerRecords").append('</form><div class="cancelButton">&#10008;</div><div class="saveButton">&#10004;</div>');
+    $(".containerRecords").append('</form><div class="saveButton">&#10004;</div>');
 
-    $(".cancelButton").click(function () { displayRecords(json, categories) });
+    $("#headerNav").removeClass("arrow trigram").addClass("cross");
+    $("#headerNav").unbind();
+    $(".cross").click(function () { displayRecords(json, categories) });
     
     $(".saveButton").click(function () {
         saveNewRecord(json, categories);
@@ -103,15 +105,17 @@ function editRecord(json, categories) {
             </tr>`);
     }
 
-    $(".containerRecords").append('</tbody></table><div class="cancelButton">&#10008;</div><div class="saveButton">&#10004;</div>');
+    $(".containerRecords").append('</tbody></table><div class="saveButton">&#10004;</div>');
     $(".deleteRecord").click(function () {
         var indexRecord = $("tr").index($(this).parent("tr:first")) - 1;
         json.records.splice(indexRecord, 1);
         ajaxPut();
         displayRecords(json, categories);
     });
-
-    $(".cancelButton").click(function () { displayRecords(json, categories) });
+    $("#headerNav").removeClass("arrow trigram").addClass("cross");
+    $("#headerNav").unbind();
+    $(".cross").click(function () { displayRecords(json, categories) });
+    
     $(".saveButton").click(function () {
         for (var i = 0; i < json.records.length; i++) {
             $("tbody tr").eq(i).find("input").each(function () {
