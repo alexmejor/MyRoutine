@@ -338,7 +338,7 @@ function displayEditDays(json, categories, thisEle, indexNewRoutine) {
         displayDays(json, categories, null, indexRoutine);
     });
     $(".containerRoutines").html(`<br>
-        <b>Nombre de la rutina</b><input class='input' type='text' value='${routineName}'><br><br>
+        <b>Nombre de la rutina</b><br><input class='input' type='text' value='${routineName}'><br><br>
         <table style='margin-bottom:70px;'>
             <thead>
                 <tr>

@@ -193,9 +193,9 @@ $(document).ready(function () {
             ]
         }
     ];
-
+    displayLogin("","","");
     console.log(json);
-    displayHome(json, categories);
+    // displayHome(json, categories);
 
     $("#headerNav").click(openNav);
     $("#overlay-back").click(closeNav);
@@ -204,6 +204,12 @@ $(document).ready(function () {
         displayHome(json, categories);
         closeNav();
         $(".titleHeader").html("Inicio");
+    });
+
+    $("#logout").click(function () {
+        closeNav();
+        $(".containerLogin").show();
+        displayLogin("","","");
     });
 
     $("#myaccount").click(function () {

@@ -448,6 +448,42 @@ form {
     width: 100%;
 }
 
+.containerLogin {
+    background-color: #161b39;
+    min-height: 100vh;
+    padding-top: 60px;
+    padding-bottom: 20px;
+    /* background-image: url(../images/biceps.jpg);
+    background-position: -180px 0px;
+    background-size: cover; */
+}
+
+.containerLogin h2, p {
+    color: white;
+    text-align: center;
+}
+
+.containerLogin input {
+    background-color: rgba(255, 255, 255, 0.295);
+    border-radius: 3px;
+    padding: 10px;
+    color:white;
+    border:1px solid rgba(255, 255, 255, 0.705);
+}
+
+.containerLogin input:hover {
+    border:1px solid rgb(255, 255, 255);
+}
+
+.containerLogin input[type="submit"] {
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 10px 0;
+    border:none;
+    color: #161b39;
+    font-weight: bold;
+}
+
 .containerError {
     color: red;
     text-align: center;
