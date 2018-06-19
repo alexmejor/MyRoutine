@@ -21,7 +21,7 @@ function displayLogin(user, password, msg) {
     $(".containerLogin").html(`
         <h2>MyRoutine</h2>
         <div style='height:10px; width:100%; color:red; text-align:center'>${msg}</div>
-        <form id="idForm">
+        <form action="javascript:void(0);" id="idForm">
             <input value="${user}" placeholder="Nombre de usuario..." type="text" name="email"><br>
             <input value="${password}" placeholder="Contraseña..." type="password" name="pwd"><br><br>
             <input type="submit" value='Entrar'><br>
@@ -32,7 +32,7 @@ function displayLogin(user, password, msg) {
         $(".containerLogin").hide();
         $(".containerRegister").html(`
             <div class="profile">
-                <form>
+                <form action="javascript:void(0);">
                     <h3 style='text-align:center'>Registro de usuario</h3>
                     <input key="name" type="text" placeholder="Nombre"><br>
                     <input key="surname" type="text" placeholder="Apellidos"><br>

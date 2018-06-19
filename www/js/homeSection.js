@@ -138,7 +138,7 @@ function createRoutine(json, categories, container) {
     });
 
     $(container).html(`
-        <form id='#form'><br>
+        <form action="javascript:void(0);" id='form'><br>
         <input placeholder='Nombre de la rutina...' type='text'><br><br>
         <select key='category'>
                 <option selected disabled>- Seleccione una categoria -</option>
@@ -178,7 +178,7 @@ function createDay(json, categories, container, indexNewRoutine, newRoutine, rou
     }
 
     $(container).html(`
-        <form>
+        <form action="javascript:void(0);">
             <h4 >Rutina: ${routineName}</h4><br>
             <input placeholder='Nombre del dia...' type='text'><br>
             <input type='submit' id='addExercices' value='Añadir ejercicios'><br><br>
@@ -197,7 +197,7 @@ function createDay(json, categories, container, indexNewRoutine, newRoutine, rou
 
 function createExercices(json, categories, container, indexNewRoutine, newDay, newRoutine) {
     $(container).html(`
-        <form>
+        <form action="javascript:void(0);">
             <h4 >Día: ${newDay["name"]}</h4><br>
             <input placeholder='Repeticiones...' class='reps' min=0 type='number'><br>
             <input placeholder='Series...' class='sets' min=0 type='number'><br>

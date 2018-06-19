@@ -46,7 +46,7 @@ function displayRecords(json, categories) {
 
 function createRecord(json, categories) {
     $(".containerRecords").html(`
-        <form>
+        <form action="javascript:void(0);">
             <input placeholder='Repeticiones...' min=0 type='number'><br><br>
             <input placeholder='Peso...' min=0 type='number'><br><br>
             <select id='exerciceGroup'>
