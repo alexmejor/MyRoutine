@@ -25,7 +25,7 @@ function displayLogin(user, password, msg) {
             <input value="${user}" placeholder="Nombre de usuario..." type="text" name="email"><br>
             <input value="${password}" placeholder="Contraseña..." type="password" name="pwd"><br><br>
             <input type="submit" value='Entrar'><br>
-            <p>¿No tienes una cuenta? <b>Registrate</b></p>
+            <p style="text-align:center;color:white">¿No tienes una cuenta? <b>Registrate</b></p>
         </form>`);
 
     $("form b").click(function () {
@@ -54,7 +54,7 @@ function displayLogin(user, password, msg) {
         $(".button").eq(0).click(function () {
             $(".containerRegister").html("");
             $(".containerLogin").show();
-            displayLogin("","","");
+            displayLogin("", "", "");
         });
 
         $(".button").eq(1).click(function () {
@@ -71,6 +71,7 @@ function displayLogin(user, password, msg) {
                 async: false,
                 success: function (response) {
                     json = response;
+                    user = response.email;
                     $(".containerRegister").html("");
                     $(".containerLogin").show();
                     displayLogin(json.email, jsonPost.password, "<label style='color:green'>¡Usuario registrado!</span>");
@@ -78,7 +79,7 @@ function displayLogin(user, password, msg) {
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $(".containerRegister").html("");
                     $(".containerLogin").show();
-                    displayLogin("","","Error al crear el usuario");
+                    displayLogin("", "", "Error al crear el usuario");
                 }
             });
         });
@@ -86,7 +87,6 @@ function displayLogin(user, password, msg) {
     $("#idForm").submit(function (event) {
         event.preventDefault(); //prevent default action
         var form_data = $(this).serialize(); //Encode form elements for submission
-        user = $("#idForm").find("input").eq(0).val();
         $.ajax({
             url: "http://18.191.145.139/Login/resources/login",
             type: 'post',
@@ -99,6 +99,7 @@ function displayLogin(user, password, msg) {
                 $(".container").show();
                 $(".containerLogin").hide();
                 token = "Bearer " + response;
+                user = $("#idForm").find("input").eq(0).val();
                 console.log(token);
                 console.log(user);
                 $.ajax({
@@ -108,8 +109,8 @@ function displayLogin(user, password, msg) {
                     async: false,
                     success: function (response) {
                         json = response;
-                        user = json.email;
-                        console.log(response);
+                        user =
+                            console.log(response);
                     }
                 });
                 $.ajax({
@@ -129,12 +130,11 @@ function displayLogin(user, password, msg) {
             }
         });
     });
-
 }
 
 function ajaxPut() {
     $.ajax({
-        url: 'http://18.191.145.139/Login/resources/users/' + user,
+        url: 'http://18.191.145.139/Login/resources/users/' + json.email,
         type: 'put',
         headers: { 'Authorization': token, },
         Accept: "application/json",

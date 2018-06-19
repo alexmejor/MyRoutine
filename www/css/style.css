@@ -458,7 +458,7 @@ form {
     background-size: cover; */
 }
 
-.containerLogin h2, p {
+.containerLogin h2 {
     color: white;
     text-align: center;
 }

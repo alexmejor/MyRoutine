@@ -4,30 +4,32 @@ var moreReps = "<button class='moreReps'>+</button>";
 
 
 var nextRoutine = '<button style="display: none;" id="buttonNext">Siguiente rutina</button>';
+
 function displayHome(json, categories) {
     resetContainers();
     $(".titleHeader").html("Inicio");
-    $(".containerHome").append(`<div style="width: 90%; margin: 40px auto;">
-                                    <div class="homeSectionButtons">
+    $(".containerHome").html(`<div style="width: 90%; margin: 40px auto;">
+                                    <div id="startTraining" class="homeSectionButtons">
                                         <i class="fas fa-play-circle"></i>comenzar a entrenar
                                     </div>
-                                    <div class="homeSectionButtons">
+                                    <div id="changeActiveRoutine" class="homeSectionButtons">
                                         <i class="fas fa-pen-square"></i>cambiar rutina
                                     </div>
-                                    <div class="homeSectionButtons createRoutine">
+                                    <div class="homeSectionButtons" id="createRoutine">
                                         <i class="fas fa-plus-circle"></i>nuevo entrenamiento
                                     </div>
                                 </div>`);
-    $(".createRoutine").click(function () {
+
+    $("#createRoutine").click(function () {
         var container = ".containerHome";
         createRoutine(json, categories, container);
     });
-    
-    $(".homeSectionButtons").eq(0).click(function () {
+
+    $("#startTraining").click(function () {
         startTraining(json, categories);
     });
 
-    $(".homeSectionButtons").eq(1).click(function () {
+    $("#changeActiveRoutine").click(function () {
         changeActiveRoutine(json, categories);
     });
 }
@@ -59,9 +61,9 @@ function displayActiveRoutine(json, categories) {
     var activeRoutine = json.activeRoutine;
     $(".titleHeader").html("Rutina Activa");
     if (!json.routines.length) {
-        $(".containerRoutines").html("<h4 style='text-align:center'>Aun no tienes ninguna rutina en la base de datos</h4><button class='button'>Crear Rutina</button>");
+        $(".containerRoutines").html("<h4 style='text-align:center'>Aun no tienes ninguna rutina en la base de datos</h4><button class='button createRoutine'>Crear Rutina</button>");
         var container = ".containerRoutines";
-        $("button").eq(0).click(function () { createRoutine(json, categories, container) });
+        $(".createRoutine").eq(0).click(function () { createRoutine(json, categories, container) });
     }
     else {
         for (var i = 0; i < json.routines.length; i++) {
@@ -223,10 +225,11 @@ function createExercices(json, categories, container, indexNewRoutine, newDay, n
         $(".saveExercice").remove();
         var exercices = [];
         $(container + " .selectExercices").append("<input type='submit' class='saveExercice' value='Añadir Ejercicio'>");
-        $(".saveExercice").click(function () {
+        $(".saveExercice").eq(0).click(function () {
             $(".tableDay tbody").append("<tr><td key='name'>" + $(".exercice").val() + "</td><td key='repetitions'>" + $(".reps").val() + "</td><td key='series'>" + $(".sets").val() + "</td></tr>");
             $(".saveDay").remove();
-            $(".tableDay").append($("<button class='saveDay'>Guardar Día</button>").click(function () {
+            $(".tableDay").append("<button class='saveDay'>Guardar Día</button>");
+            $(".saveDay").eq(0).click(function () {
                 for (var i = 1; i < $("tr").length; i++) {
                     var exerciceName = $("tr").eq(i).find("td").eq(0).html();
                     for (var x = 0; x < categories.length; x++) {
@@ -258,7 +261,7 @@ function createExercices(json, categories, container, indexNewRoutine, newDay, n
                 $(".tableDay").remove();
                 $(container).html("");
                 displayDays(json, categories, null, indexNewRoutine);
-            }));
+            });
         });
     });
 }
@@ -269,7 +272,7 @@ function startTraining(json, categories) {
     $(".titleHeader").html("Comenzar Entrenamiento");
     $("#headerNav").removeClass("cross trigram").addClass("arrow");
     $("#headerNav").unbind();
-    $(".arrow").click(function () {
+    $(".arrow").eq(0).click(function () {
         displayHome(json, categories);
     });
     for (var i = 0; i < json.routines.length; i++) {
@@ -296,7 +299,7 @@ function changeActiveRoutine(json, categories) {
     $(".titleHeader").html("Cambiar Rutina");
     $("#headerNav").removeClass("cross trigram").addClass("arrow");
     $("#headerNav").unbind();
-    $(".arrow").click(function () {
+    $(".arrow").eq(0).click(function () {
         displayHome(json, categories);
     });
     for (var i = 0; i < json.routines.length; i++) {
@@ -313,7 +316,7 @@ function changeActiveRoutine(json, categories) {
     }
     $(".containerHome").append("</tbody></table>");
 
-    $(".changeRoutine").click(function () {
+    $(".changeRoutine").eq(0).click(function () {
         json["activeRoutine"] = json.routines[$(this).attr("name")].id;
         ajaxPut();
         changeActiveRoutine(json, categories);
@@ -334,7 +337,7 @@ function displayEditDays(json, categories, thisEle, indexNewRoutine) {
     var routineName = json.routines[indexRoutine].name;
     $("#headerNav").removeClass("arrow").addClass("cross");
     $("#headerNav").unbind();
-    $(".cross").click(function () {
+    $(".cross").eq(0).click(function () {
         displayDays(json, categories, null, indexRoutine);
     });
     $(".containerRoutines").html(`<br>
@@ -362,13 +365,13 @@ function displayEditDays(json, categories, thisEle, indexNewRoutine) {
         </table>
         <div class="saveButton">&#10004;</div>`);
 
-    $(".deleteDay").click(function () {
+    $(".deleteDay").eq(0).click(function () {
         var indexDay = $("tr").index($(this).parent("tr:first")) - 1;
         json.routines[indexRoutine].days.splice(indexDay, 1);
         // ajaxPut();
         displayEditDays(json, categories, thisEle, indexNewRoutine);
     });
-    $(".saveButton").click(function () {
+    $(".saveButton").eq(0).click(function () {
         json.routines[indexRoutine].name = $("input").eq(0).val();
 
         for (var i = 0; i < $("table input").length; i++) {
@@ -394,7 +397,7 @@ function displayDays(json, categories, thisEle, indexNewRoutine) {
     $("#headerNav").removeClass("cross trigram").addClass("arrow");
     $("#headerNav").unbind();
     $(".titleHeader").html("Entrenamientos");
-    $(".arrow").click(function () {
+    $(".arrow").eq(0).click(function () {
         // displayDays(json, categories, null, indexRoutine);
         displayRoutines(json, categories)
     });
@@ -417,21 +420,21 @@ function displayDays(json, categories, thisEle, indexNewRoutine) {
         ${active}
         <button class='deleteRoutine button'>Eliminar rutina</button><div><div class="addButton"><i class="fas fa-plus"></i></div><div class="editButton"><i class="fas fa-pencil-alt"></i></div>`);
 
-    $(".deleteRoutine").click(function () {
+    $(".deleteRoutine").eq(0).click(function () {
         json.routines.splice(indexRoutine, 1);
         ajaxPut();
         displayRoutines(json, categories);
     });
 
-    $(".activateRoutine").click(function () {
+    $(".activateRoutine").eq(0).click(function () {
         json["activeRoutine"] = json.routines[indexRoutine].id;
         ajaxPut();
         displayActiveRoutine(json, categories);
     });
 
     var container = ".containerRoutines";
-    $(".addButton").click(function () { createDay(json, categories, container, indexRoutine, null, routineName) });
-    $(".editButton").click(function () { displayEditDays(json, categories, thisEle, indexNewRoutine) });
+    $(".addButton").eq(0).click(function () { createDay(json, categories, container, indexRoutine, null, routineName) });
+    $(".editButton").eq(0).click(function () { displayEditDays(json, categories, thisEle, indexNewRoutine) });
 
     //it shows the info of each exercice (description, name, images)
     $(".selectDay").on("click", function () {
@@ -444,7 +447,7 @@ function displayDays(json, categories, thisEle, indexNewRoutine) {
 function displayDayTable(json, categories, thisEle) {
     var indexRoutine = $(thisEle).attr("name");
     var indexDay = $(thisEle).find("div").attr("name");
-    $(".arrow").click(function () {
+    $(".arrow").eq(0).click(function () {
         displayDays(json, categories, thisEle, null);
     });
     // $(".titleHeader").html(json.routines[indexRoutine].name);
@@ -456,7 +459,7 @@ function displayDayTable(json, categories, thisEle) {
     }
     $(".containerRoutines").append("</tbody></table></div>");
     // $(".containerRoutines").append("</tbody></table></div><button name='" + json.routines[indexRoutine].days[indexDay].id + "' class='nextDay'>Siguiente dia</button>");
-    $(".nextDay").click(function () {
+    $(".nextDay").eq(0).click(function () {
         console.log($(this).attr("name"));
     });
     buttonMoreLess();
