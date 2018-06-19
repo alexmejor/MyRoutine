@@ -109,7 +109,7 @@ function editRecord(json, categories) {
     $(".deleteRecord").click(function () {
         var indexRecord = $("tr").index($(this).parent("tr:first")) - 1;
         json.records.splice(indexRecord, 1);
-        ajaxPut();
+        ajaxPut(json);
         displayRecords(json, categories);
     });
     $("#headerNav").removeClass("arrow trigram").addClass("cross");
@@ -122,7 +122,7 @@ function editRecord(json, categories) {
                 json.records[i][$(this).attr("key")] = $(this).val();
             });
         }
-        ajaxPut();
+        ajaxPut(json);
         displayRecords(json, categories);
     });
 }
@@ -152,7 +152,7 @@ function saveNewRecord(json, categories) {
             "kilos": $("input").eq(1).val(),
         };
         json["records"].push(records);
-        ajaxPut();
+        ajaxPut(json);
         displayRecords(json, categories);
     }
 }

@@ -257,7 +257,7 @@ function createExercices(json, categories, container, indexNewRoutine, newDay, n
                 else {
                     json.routines[indexNewRoutine]["days"].push(newDay)
                 }
-                ajaxPut();
+                ajaxPut(json);
                 $(".tableDay").remove();
                 $(container).html("");
                 displayDays(json, categories, null, indexNewRoutine);
@@ -269,7 +269,7 @@ function createExercices(json, categories, container, indexNewRoutine, newDay, n
 function startTraining(json, categories) {
     var indexRoutine;
     var indexDay = 0;
-    $(".titleHeader").html("Comenzar Entrenamiento");
+    $(".titleHeader").html("Comenzar a Entrenar");
     $("#headerNav").removeClass("cross trigram").addClass("arrow");
     $("#headerNav").unbind();
     $(".arrow").eq(0).click(function () {
@@ -318,7 +318,7 @@ function changeActiveRoutine(json, categories) {
 
     $(".changeRoutine").eq(0).click(function () {
         json["activeRoutine"] = json.routines[$(this).attr("name")].id;
-        ajaxPut();
+        ajaxPut(json);
         changeActiveRoutine(json, categories);
         // $(".containerHome").html("");
         // displayActiveRoutine(json, categories);
@@ -378,7 +378,7 @@ function displayEditDays(json, categories, thisEle, indexNewRoutine) {
             console.log($("table input").eq(i).attr("name"));
             json.routines[indexRoutine].days[$("table input").eq(i).attr("name")].name = $("table input").eq(i).val();
         }
-        ajaxPut();
+        ajaxPut(json);
         displayDays(json, categories, null, indexRoutine);
 
     });
@@ -422,13 +422,13 @@ function displayDays(json, categories, thisEle, indexNewRoutine) {
 
     $(".deleteRoutine").eq(0).click(function () {
         json.routines.splice(indexRoutine, 1);
-        ajaxPut();
+        ajaxPut(json);
         displayRoutines(json, categories);
     });
 
     $(".activateRoutine").eq(0).click(function () {
         json["activeRoutine"] = json.routines[indexRoutine].id;
-        ajaxPut();
+        ajaxPut(json);
         displayActiveRoutine(json, categories);
     });
 

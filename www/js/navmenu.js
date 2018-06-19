@@ -109,8 +109,6 @@ function displayLogin(user, password, msg) {
                     async: false,
                     success: function (response) {
                         json = response;
-                        user =
-                            console.log(response);
                     }
                 });
                 $.ajax({
@@ -132,7 +130,8 @@ function displayLogin(user, password, msg) {
     });
 }
 
-function ajaxPut() {
+function ajaxPut(json) {
+    console.log(json);
     $.ajax({
         url: 'http://18.191.145.139/Login/resources/users/' + json.email,
         type: 'put',
