@@ -42,6 +42,12 @@ function displayRecords(json, categories) {
         $(".titleHeader").html("Editar Marcas");
         editRecord(json, categories);
     });
+    $(function () {
+        $("tbody").sortable({
+            revert: true,
+        });
+        // $( "tr" ).disableSelection();
+    });
 }
 
 function createRecord(json, categories) {

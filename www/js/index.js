@@ -274,7 +274,7 @@ $(document).ready(function () {
             //     $(".modal").hide(500);
             //     displayProfile();
             // });
-            ajaxPut();
+            ajaxPut(json);
 
         });
     }

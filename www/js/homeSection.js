@@ -463,4 +463,10 @@ function displayDayTable(json, categories, thisEle) {
         console.log($(this).attr("name"));
     });
     buttonMoreLess();
+    $(function () {
+        $("tbody").sortable({
+            revert: true,
+        });
+        // $( "tr" ).disableSelection();
+    });
 }
